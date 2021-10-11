@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RaycastScript : MonoBehaviour
+public class MouseDragScript : MonoBehaviour
 {
-    [SerializeField]
-    private float rotateYspeed = 4.0f;
-    [SerializeField]
-    private float rotateXspeed = 4.0f;
-    SpriteRenderer sr;
-
-    
+    [SerializeField] float timer;
+    [SerializeField] float fireRate = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,22 +15,31 @@ public class RaycastScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x - mouseY * rotateYspeed, transform.localEulerAngles.y + mouseX * rotateXspeed, transform.localEulerAngles.z);
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastMethod();
-        }
+        
     }
+    private void OnMouseDrag()
+    {
+        timer += Time.deltaTime;
+        if (timer > fireRate)
+        {
+            if (Input.GetButton("Fire1"))
+            {
+                timer = 0f;
+                RaycastMethod();
+            }
 
+
+        }
+        print("Mouse Dragging");
+        
+    }
     public void RaycastMethod()
     {
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Ray ray = new Ray(this.transform.position, this.transform.forward);
-    
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Ray ray = new Ray(this.transform.position, this.transform.forward);
+
         print(ray.direction);
-        ray.direction = new Vector3(-ray.direction.x ,-ray.direction.y, ray.direction.z);
+        ray.direction = new Vector3(-ray.direction.x, -ray.direction.y, ray.direction.z);
         Debug.DrawRay(ray.origin, ray.direction * 30f, Color.blue, 2f);
         //RaycastHit hit;
         if (Physics.Raycast(ray, out RaycastHit hit, 100f))
