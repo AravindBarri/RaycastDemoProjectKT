@@ -6,6 +6,9 @@ public class MouseDragScript : MonoBehaviour
 {
     [SerializeField] float timer;
     [SerializeField] float fireRate = 1f;
+    Ray SecondRay;
+    [SerializeField]
+    float cubeSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,48 +18,31 @@ public class MouseDragScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    private void OnMouseDrag()
-    {
-        timer += Time.deltaTime;
-        if (timer > fireRate)
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
+        transform.position += movement * Time.deltaTime * cubeSpeed;
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetButton("Fire1"))
-            {
-                timer = 0f;
-                RaycastMethod();
-            }
-
-
+            RaycastMethod();
         }
-        print("Mouse Dragging");
-        
+
+
     }
+    
     public void RaycastMethod()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //Ray ray = new Ray(this.transform.position, this.transform.forward);
 
-        print(ray.direction);
-        ray.direction = new Vector3(-ray.direction.x, -ray.direction.y, ray.direction.z);
-        Debug.DrawRay(ray.origin, ray.direction * 30f, Color.blue, 2f);
-        //RaycastHit hit;
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-        {
-            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 2f);
-            print(hit.collider.gameObject.name);
-            GameObject currentHit = hit.collider.gameObject;
-            if (currentHit.GetComponent<Collider>())
+            SecondRay = new Ray(this.transform.position, Vector3.up);
+
+            if (Physics.Raycast(SecondRay, out RaycastHit hit2, 100f))
             {
-                currentHit.GetComponent<Renderer>().material.color = Color.red;
+                Debug.DrawRay(SecondRay.origin, SecondRay.direction * hit2.distance, Color.yellow, 2f);
+                GameObject currentHit = hit2.collider.gameObject;
+                if (currentHit.GetComponent<Collider>())
+                {
+                    currentHit.GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
+                }
+                StartCoroutine(ResetCubeColor(currentHit));
             }
-            StartCoroutine(ResetCubeColor(currentHit));
-        }
-        else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * 30f, Color.red, 2f);
-        }
     }
     IEnumerator ResetCubeColor(GameObject CurrectCube)
     {
