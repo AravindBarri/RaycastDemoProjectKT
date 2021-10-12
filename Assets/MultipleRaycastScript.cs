@@ -157,7 +157,7 @@ public class MultipleRaycastScript : MonoBehaviour
                     GameObject currentHit = hit2.collider.gameObject;
                     if (currentHit.GetComponent<Collider>())
                     {
-                        currentHit.GetComponent<Renderer>().material.color = Color.red;
+                        currentHit.GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
                     }
                     StartCoroutine(ResetCubeColor(currentHit));
                 }
@@ -173,7 +173,7 @@ public class MultipleRaycastScript : MonoBehaviour
                     GameObject currentHit = hit2.collider.gameObject;
                     if (currentHit.GetComponent<Collider>())
                     {
-                        currentHit.GetComponent<Renderer>().material.color = Color.red;
+                        currentHit.GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
                     }
                     StartCoroutine(ResetCubeColor(currentHit));
                 }
@@ -189,7 +189,7 @@ public class MultipleRaycastScript : MonoBehaviour
                     GameObject currentHit = hit2.collider.gameObject;
                     if (currentHit.GetComponent<Collider>())
                     {
-                        currentHit.GetComponent<Renderer>().material.color = Color.red;
+                        currentHit.GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
                     }
                     StartCoroutine(ResetCubeColor(currentHit));
                 }
