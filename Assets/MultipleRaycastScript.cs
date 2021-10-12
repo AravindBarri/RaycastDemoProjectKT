@@ -21,10 +21,10 @@ public class MultipleRaycastScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X");
+        /*float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x - mouseY * rotateYspeed, transform.localEulerAngles.y + mouseX * rotateXspeed, transform.localEulerAngles.z);
-        if (Input.GetMouseButtonDown(0))
+        */if (Input.GetMouseButtonDown(0))
         {
             if (selectedRaycast == "RaycastAll")
             {
@@ -141,7 +141,7 @@ public class MultipleRaycastScript : MonoBehaviour
                     GameObject currentHit = hit2.collider.gameObject;
                     if (currentHit.GetComponent<Collider>())
                     {
-                        currentHit.GetComponent<Renderer>().material.color = Color.red;
+                        currentHit.GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
                     }
                     StartCoroutine(ResetCubeColor(currentHit));
                 }
@@ -215,7 +215,7 @@ public class MultipleRaycastScript : MonoBehaviour
             GameObject currentHit = hit.collider.gameObject;
             if (currentHit.GetComponent<Collider>())
             {
-                currentHit.GetComponent<Renderer>().material.color = Color.red;
+                currentHit.GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
             }
             StartCoroutine(ResetCubeColor(currentHit));
         }
